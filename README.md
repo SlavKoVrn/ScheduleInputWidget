@@ -1,4 +1,45 @@
 <p align="center">
+    <h2 align="center">ScheduleInputWidget</h2>
+    <h3 align="center">yii2 widget to input work time</h3>
+    <a href="http://kadastrcard.ru" target="_blank">
+        <img src="http://kadastrcard.ru/enabled.png" height="100px">
+    </a>
+</p>
+
+<pre>
+class ScheduleForm extends \yii\base\Model
+{
+    public $schedule;
+    public $enable_time_zone;
+    public $enable_production_calendar;
+
+    public function rules()
+    {
+        return [
+            [['schedule'], 'required'],
+            [['schedule','enable_time_zone','enable_production_calendar'], 'safe'],
+            ['schedule', function ($attribute, $params) {
+                ScheduleValidator::validateSchedule($attribute, $params, $this);
+            }],
+        ];
+    }
+    public function behaviors()
+    {
+        return [
+            'beforeValidate' => [
+                'class' => ScheduleBehavior::class,
+                'attribute' => 'schedule',
+            ],
+        ];
+    }
+}
+$model = new ScheduleForm;
+$form = ActiveForm::begin();
+$form->field($model, 'schedule')->widget(ScheduleInputWidget::class);
+</pre>
+
+
+<p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
