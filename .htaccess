@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule ^admin/?(.{2,})?$ /backend/web/$1 [L,PT]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^/].*)?$ /frontend/web/$1
