@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use slavko\schedule\ScheduleForm;
+use yii\widgets\ActiveForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -68,6 +70,22 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionValidate()
+    {
+        $model = new ScheduleForm;
+        $model->load(Yii::$app->request->post());
+        $errors = ActiveForm::validate($model);
+        if (count($errors)){
+            $messages = array_map(function ($item) {
+                return $item;
+            }, current($errors));
+            $errors = print_r($messages,true);
+            return Yii::t('common','Errors').str_replace(['Array'],'',$errors);
+        }
+        $schedule = print_r($model->schedule,true);
+        return str_replace(['Array'],'',$schedule);
+    }
+
     /**
      * Displays homepage.
      *
@@ -75,7 +93,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new ScheduleForm;
+        return $this->render('index',['model' => $model]);
     }
 
     /**

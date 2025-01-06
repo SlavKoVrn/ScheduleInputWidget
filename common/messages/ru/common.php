@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'Yii2 Schedule Input Widget' => 'Yii2 Виджит Ввода Режима Работы',
+    'Working time' => 'Рабочие часы',
+    'Special days' => 'Особенные дни',
+    'Begin time' => 'Время начала',
+    'End time' => 'Время окончания',
+    'Day of week' => 'День недели',
+    'Monday' => 'Понедельник',
+    'Tuesday' => 'Вторник',
+    'Wednesday' => 'Среда',
+    'Thursday' => 'Четверг',
+    'Friday' => 'Пятница',
+    'Saturday' => 'Суббота',
+    'Sunday' => 'Воскресенье',
+    'Get Data' => 'Получить данные',
+    'Schedule' => 'Раписание',
+    'Output' => 'Вывод',
+    'Use time zone' => 'Учитывать часовой пояс',
+    'Production calendar' => 'Производственный календарь',
+    'Errors' => 'Ошибки',
+    'Start time {start_time} must be before end time {end_time}' => 'Время начала {start_time} должно быть меньше времени окончания {end_time}',
+    'Start time {start_time} or end time {end_time} not within the current year.' => 'Время начала {start_time} или время окончания {end_time} не текущего года',
+    'Start time {start_time} end time {end_time} worktime week day already exists' => 'Время начала {start_time} время окончания {end_time} рабочее время для данного дня недели уже существует',
+    'Special periods overlap. Please adjust the timeframes.' => 'Специальные периоды пересекаются. Пожалуйста, измените временные интервалы.',
+];

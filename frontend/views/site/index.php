@@ -1,52 +1,103 @@
 <?php
+use slavko\schedule\ScheduleInputWidget;
+
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+$this->title = Yii::t('common','Yii2 Schedule Input Widget');
+Yii::$app->view->registerMetaTag([
+    'name' => 'keywords',
+    'content' => Yii::t('common','Yii2 Schedule Input Widget')
+]);
+Yii::$app->view->registerMetaTag([
+    'name' => 'description',
+    'content' => Yii::t('common','Yii2 Schedule Input Widget')
+]);
 ?>
-<div class="site-index">
-    <div class="p-5 mb-4 bg-transparent rounded-3">
-        <div class="container-fluid py-5 text-center">
-            <h1 class="display-4">Congratulations!</h1>
-            <p class="fs-5 fw-light">You have successfully created your Yii-powered application.</p>
-            <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
+<div class="contact container">
+    <div class="row info">
+
+        <div class="col-lg-12">
+
+            <section id="blog-details" class="blog-details section">
+                <div class="container">
+
+<pre>
+class ScheduleForm extends \yii\base\Model
+{
+    public $schedule;
+    public $enable_time_zone;
+    public $enable_production_calendar;
+
+    public function rules()
+    {
+        return [
+            [['schedule'], 'required'],
+            [['schedule','enable_time_zone','enable_production_calendar'], 'safe'],
+            ['schedule', function ($attribute, $params) {
+                ScheduleValidator::validateSchedule($attribute, $params, $this);
+            }],
+        ];
+    }
+    public function behaviors()
+    {
+        return [
+            'beforeValidate' => [
+                'class' => ScheduleBehavior::class,
+                'attribute' => 'schedule',
+            ],
+        ];
+    }
+}
+$model = new ScheduleForm;
+$form = ActiveForm::begin();
+$form->field($model, 'schedule')->widget(ScheduleInputWidget::class);
+</pre>
+
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'validate-multiple-form',
+                        'action' => '/site/index',
+                        'validationUrl' => '/site/validate',
+                        'options' => [
+                            'class' => 'php-email-form',
+                        ],
+                    ]); ?>
+
+                    <?= $form->field($model, 'schedule')->widget(ScheduleInputWidget::class,[
+                        'formId' => 'validate-multiple-form',
+                        'removeButtonOptions' => [ 'class' =>'btn btn-success'],
+                    ])->label(Html::tag('h1',Yii::t('common','Yii2 Schedule Input Widget'),[
+                        'style' => 'font-size:22px'
+                    ])); ?>
+
+                    <div class="form-group">
+                        <?= Html::submitButton(Yii::t('common', 'Output'), ['class' => 'btn btn-success']) ?>
+                    </div>
+
+                    <pre id="code"></pre>
+
+                    <?php ActiveForm::end(); ?>
+
+                </div>
+            </section>
+
         </div>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
     </div>
 </div>
+<style>
+    pre {
+        display: block;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
