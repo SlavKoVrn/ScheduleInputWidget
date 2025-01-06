@@ -40,7 +40,7 @@ $form->field($model, 'schedule')->widget(ScheduleInputWidget::class);
 
 
 ```php
-git clone git@github.com:SlavKoVrn/ScheduleInputWidget.git schedule
+git clone https://github.com/SlavKoVrn/ScheduleInputWidget.git schedule
 cd schedule
 composer install
 init
