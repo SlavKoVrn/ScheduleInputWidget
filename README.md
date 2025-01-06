@@ -38,6 +38,9 @@ $form = ActiveForm::begin();
 $form->field($model, 'schedule')->widget(ScheduleInputWidget::class);
 </pre>
 
+<p align="center">
+    <h3 align="center">how to install</h3>
+</p>
 
 ```php
 git clone https://github.com/SlavKoVrn/ScheduleInputWidget.git schedule
