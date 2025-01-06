@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Status' => 'Статус',
     'Yii2 Schedule Input Widget' => 'Yii2 Виджит Ввода Режима Работы',
     'Working time' => 'Рабочие часы',
     'Special days' => 'Особенные дни',
