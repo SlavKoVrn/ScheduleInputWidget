@@ -94,7 +94,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model = new ScheduleForm;
-        return $this->render('index',['model' => $model]);
+        $model2 = new ScheduleForm;
+        return $this->render('index',['model' => $model,'model2' => $model2]);
     }
 
     /**

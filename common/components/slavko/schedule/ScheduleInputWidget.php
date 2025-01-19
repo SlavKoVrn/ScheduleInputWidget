@@ -73,6 +73,8 @@ class ScheduleInputWidget extends MultipleInput
     {
         parent::init();
 
+        $this->id = 'multiple-input-'.md5(microtime());
+
         $this->options['id'] = $this->id."-widget";
         $this->options['class'] = "";
         $this->clientOptions['id'] = $this->id."-widget";
@@ -119,7 +121,6 @@ class ScheduleInputWidget extends MultipleInput
         ScheduleInputWidgetAsset::register($this->view);
         $this->registerJS();
 
-        $this->id = 'multiple-input';
         $this->min = 0;
         //$this->max = 7;
         $this->allowEmptyList = false;
@@ -180,13 +181,13 @@ class ScheduleInputWidget extends MultipleInput
 
         $checkboxTimeZone = CheckboxImageWidget::widget([
             'label' => Yii::t('common','Use time zone'),
-            'id' => 'enable_time_zone',
+            'id' => 'enable_time_zone_'.md5(microtime()),
             'name' => Html::getInputName($this->model, 'enable_time_zone'),
             'value' => $this->enableTimeZone,
         ]);
         $checkboxProductionCalendar = CheckboxImageWidget::widget([
             'label' => Yii::t('common','Production calendar'),
-            'id' => 'enable_production_calendar',
+            'id' => 'enable_production_calendar_'.md5(microtime()),
             'name' => Html::getInputName($this->model, 'enable_production_calendar'),
             'value' => $this->enableProductionCalendar,
         ]);
@@ -289,8 +290,8 @@ class ScheduleInputWidget extends MultipleInput
             return momentDate.format("YYYY-MM-DD HH:mm:ss");
         };
 
-        $('#multiple-input').on('afterInit', function(){
-            var rows = $('table.multiple-input-list tr');
+        $('#{$this->id}').on('afterInit', function(){
+            var rows = $('#{$this->id}').find('table.multiple-input-list tr');
             rows.each((index, element) => {
                 var row = $(element);
                 var selectedStatus = row.find('td.list-cell__{$this->status}').find('select').val();
@@ -385,7 +386,7 @@ class ScheduleInputWidget extends MultipleInput
             });
         });
 
-        $('#multiple-input').on('afterAddRow', function(e, row, currentIndex){
+        $('#{$this->id}').on('afterAddRow', function(e, row, currentIndex){
             let pickers = row.find('.picker');
             pickers.each((index, element) => {
                 let picker = $(element);

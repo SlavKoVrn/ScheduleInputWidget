@@ -66,7 +66,7 @@ $form->field($model, 'schedule')->widget(ScheduleInputWidget::class);
                     ]); ?>
 
                     <?= $form->field($model, 'schedule')->widget(ScheduleInputWidget::class,[
-                        'formId' => 'validate-multiple-form',
+                        'formId' => $form->id,
                         'removeButtonOptions' => [ 'class' =>'btn btn-success'],
                     ])->label(Html::tag('h1',Yii::t('common','Yii2 Schedule Input Widget'),[
                         'style' => 'font-size:22px'
@@ -77,6 +77,28 @@ $form->field($model, 'schedule')->widget(ScheduleInputWidget::class);
                     </div>
 
                     <pre id="code"></pre>
+
+                    <?php ActiveForm::end(); ?>
+
+                    <?php $form2 = ActiveForm::begin([
+                        'id' => 'validate-multiple-form-2',
+                        'action' => '/site/index',
+                        'validationUrl' => '/site/validate',
+                        'options' => [
+                            'class' => 'php-email-form',
+                        ],
+                    ]); ?>
+
+                    <?= $form2->field($model2, 'schedule')->widget(ScheduleInputWidget::class,[
+                        'formId' => $form2->id,
+                        'removeButtonOptions' => [ 'class' =>'btn btn-success'],
+                    ])->label(Html::tag('h1',Yii::t('common','Yii2 Schedule Input Widget'),[
+                        'style' => 'font-size:22px'
+                    ])); ?>
+
+                    <div class="form-group">
+                        <?= Html::submitButton(Yii::t('common', 'Output'), ['class' => 'btn btn-success']) ?>
+                    </div>
 
                     <?php ActiveForm::end(); ?>
 
